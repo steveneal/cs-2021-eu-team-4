@@ -19,7 +19,7 @@ public class TradeDataLoader {
 
     public Dataset<Row> loadTrades(SparkSession session, String path) {
         //TODO: create an explicit schema for the trade data in the JSON files
-        StructType schema = null;
+        StructType schema = new StructType();
 
         //TODO: load the trades dataset
         Dataset<Row> trades = null;

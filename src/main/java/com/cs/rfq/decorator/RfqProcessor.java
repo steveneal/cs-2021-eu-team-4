@@ -49,6 +49,8 @@ public class RfqProcessor {
 
     public void startSocketListener() throws InterruptedException {
         //TODO: stream data from the input socket on localhost:9000
+        JavaDStream<String> lines = streamingContext.socketTextStream("localhost", 9000);
+
 
         //TODO: convert each incoming line to a Rfq object and call processRfq method with it
 
