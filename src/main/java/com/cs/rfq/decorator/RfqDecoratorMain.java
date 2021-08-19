@@ -10,7 +10,6 @@ public class RfqDecoratorMain {
     public static void main(String[] args) throws Exception {
         System.setProperty("hadoop.home.dir", "C:\\Java\\hadoop-2.9.2");
         System.setProperty("spark.master", "local[4]");
-
         //TODO: create a Spark configuration and set a sensible app name
 
         //TODO: create a Spark streaming context

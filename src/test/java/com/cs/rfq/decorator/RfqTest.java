@@ -13,13 +13,13 @@ public class RfqTest {
                 "'traderId': 3351266293154445953, " +
                 "'entityId': 5561279226039690843, " +
                 "'instrumentId': 'AT0000383864', " +
-                "'qty': 250000, " +
+                "'quantity': 250000, " +
                 "'price': 1.58, " +
                 "'side': 'B' " +
                 "}";
 
         Rfq rfq = Rfq.fromJson(validRfqJson);
-
+        System.out.println(rfq);
         assertAll(
                 () -> assertEquals("123ABC", rfq.getId()),
                 () -> assertEquals((Long) 3351266293154445953L, rfq.getTraderId()),
