@@ -58,7 +58,7 @@ public class Rfq implements Serializable {
         return instrumentId;
     }
 
-    public void setIsin(String instrumentIdd) {
+    public void setIsin(String instrumentId) {
         this.instrumentId = instrumentId;
     }
 

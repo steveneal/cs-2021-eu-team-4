@@ -62,7 +62,8 @@ public class TradeDataLoader {
                 createStructField("LastQty", LongType, false),
                 createStructField("LastPx", DoubleType,  false),
                 createStructField("TradeDate", DateType, false),
-                createStructField("Currency", StringType, false)
+                createStructField("Currency", StringType, false),
+                createStructField("Side", IntegerType, false)
                 }
         );
 

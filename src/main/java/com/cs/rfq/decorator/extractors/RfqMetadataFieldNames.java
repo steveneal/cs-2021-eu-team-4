@@ -8,5 +8,6 @@ public enum RfqMetadataFieldNames {
     tradesWithEntityPastWeek,
     tradesWithEntityPastYear,
     volumeTradedYearToDate,
-    averageTradedPrice
+    averageTradedPrice,
+    tradeSideBias
 }
