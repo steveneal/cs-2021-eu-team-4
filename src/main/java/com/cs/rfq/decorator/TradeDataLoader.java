@@ -71,7 +71,7 @@ public class TradeDataLoader {
 
         //TODO: log a message indicating number of records loaded and the schema used
         System.out.println(trades.count());
-        System.out.println(trades.first());
+       // System.out.println(trades.first());
         trades.printSchema();
 
         return trades;
