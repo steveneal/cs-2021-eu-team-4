@@ -40,7 +40,6 @@ public class TradeDataLoaderTest extends AbstractSparkUnitTest {
         String currency = trades.first().getString(6);
 
         //2018-06-09
-        System.out.println(trades.first());
         Date expectedTradeDate = new Date(new DateTime().withYear(2018).withMonthOfYear(6).withDayOfMonth(9).withMillisOfDay(0).getMillis());
 
         assertAll(

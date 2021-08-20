@@ -4,6 +4,7 @@ import org.apache.spark.SparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
 import org.apache.spark.sql.types.StructType;
@@ -40,21 +41,29 @@ val struct =
       new StructField("candycrushscore", DataTypes.createDecimalType(), false, Metadata.empty())
   });
  */
+
+
+/*
+ StructType schema = DataTypes.createStructType(
+      new StructField[] {
+          createStructField("foo", StringType, false)
+      });
+ */
 public class TradeDataLoader {
 
     private final static Logger log = LoggerFactory.getLogger(TradeDataLoader.class);
 
     public Dataset<Row> loadTrades(SparkSession session, String path) {
         //TODO: create an explicit schema for the trade data in the JSON files
-        StructType schema = new StructType( new StructField[] {
-                new StructField("traderId", LongType, true, Metadata.empty()),
-                new StructField("entityId", LongType, true, Metadata.empty()),
-                new StructField("securityId", StringType, true, Metadata.empty()),
-                new StructField("lastQty", LongType, true, Metadata.empty()),
-                new StructField("lastPx", DoubleType, true, Metadata.empty()),
-                new StructField("tradeDate", DateType, true, Metadata.empty()),
-                new StructField("currency", StringType, true, Metadata.empty())
-         }
+        StructType schema = DataTypes.createStructType(new StructField[]{
+                createStructField("TraderId", LongType, false),
+                createStructField("EntityId", LongType, false),
+                createStructField("SecurityID", StringType, false),
+                createStructField("LastQty", LongType, false),
+                createStructField("LastPx", DoubleType,  false),
+                createStructField("TradeDate", DateType, false),
+                createStructField("Currency", StringType, false)
+                }
         );
 
         //TODO: load the trades dataset
@@ -62,6 +71,7 @@ public class TradeDataLoader {
 
         //TODO: log a message indicating number of records loaded and the schema used
         System.out.println(trades.count());
+        System.out.println(trades.first());
         trades.printSchema();
 
         return trades;
