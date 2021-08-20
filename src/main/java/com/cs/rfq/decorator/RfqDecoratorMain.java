@@ -28,10 +28,10 @@ public class RfqDecoratorMain {
         RfqProcessor p = new RfqProcessor(session, jssc);
         p.startSocketListener();
 
-        /*
+
         jssc.start();
         jssc.awaitTermination();
-         */
+
     }
 
 }
