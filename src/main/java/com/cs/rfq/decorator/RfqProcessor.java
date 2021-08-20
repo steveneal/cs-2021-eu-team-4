@@ -50,9 +50,7 @@ public class RfqProcessor {
 
     public void startSocketListener() throws InterruptedException {
         // Stream data from the input socket on localhost:9000
-        SparkConf conf = new SparkConf().setAppName("StreamTrades");
-        JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(5));
-        JavaDStream<String> lines = jssc.socketTextStream("localhost", 9000);
+        JavaDStream<String> lines = streamingContext.socketTextStream("localhost", 9000);
         // Convert each incoming line to a Rfq object and call processRfq method with it
         lines.foreachRDD(rdd -> {
             // Split each line and parse it
@@ -60,8 +58,8 @@ public class RfqProcessor {
         });
 
         // Start the streaming context
-        jssc.start();
-        jssc.awaitTermination();
+        streamingContext.start();
+        // streamingContext.awaitTermination();
     }
 
     public void processRfq(Rfq rfq) {
