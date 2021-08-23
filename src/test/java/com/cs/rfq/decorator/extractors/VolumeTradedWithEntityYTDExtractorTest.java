@@ -35,7 +35,7 @@ public class VolumeTradedWithEntityYTDExtractorTest extends AbstractSparkUnitTes
         Map<RfqMetadataFieldNames, Object> meta = extractor.extractMetaData(rfq, session, trades);
 
         Object result = meta.get(RfqMetadataFieldNames.volumeTradedYearToDate);
-
+        System.out.println(trades);
         assertEquals(1_350_000L, result);
     }
 
