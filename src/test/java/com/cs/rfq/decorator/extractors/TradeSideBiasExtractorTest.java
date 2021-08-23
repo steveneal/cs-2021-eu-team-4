@@ -21,7 +21,7 @@ public class TradeSideBiasExtractorTest extends AbstractSparkUnitTest {
         rfq.setEntityId(5561279226039690843L);
         rfq.setIsin("AT0000A0VRQ6");
 
-        String filePath = getClass().getResource("volume-traded-1.json").getPath();
+        String filePath = getClass().getResource("tedt-data.json").getPath();
         trades = new TradeDataLoader().loadTrades(session, filePath);
     }
 
