@@ -4,9 +4,19 @@ package com.cs.rfq.decorator.extractors;
  * Enumeration of all metadata that will be published by this component
  */
 public enum RfqMetadataFieldNames {
-    tradesWithEntityToday,
+    // For TotalTradesWithEntityExtractor
     tradesWithEntityPastWeek,
+    tradesWithEntityPastMonth,
     tradesWithEntityPastYear,
+
+    // VolumeTradedForInstrumentExtractor
     volumeTradedYearToDate,
-    averageTradedPrice
+
+    // AverageTradedPriceExtractor
+    averageTradedPrice,
+
+    // VolumeTradedForInstrumentExtractor
+    volumeTradedForSecurityPastWeek,
+    volumeTradedForSecurityPastMonth,
+    volumeTradedForSecurityPastYear,
 }

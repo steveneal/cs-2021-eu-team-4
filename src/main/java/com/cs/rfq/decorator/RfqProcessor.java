@@ -56,22 +56,26 @@ public class RfqProcessor {
         // Convert each incoming line to a Rfq object and call processRfq method with it
         lines.foreachRDD(rdd -> {
             // Split each line and parse it
-            rdd.collect().forEach(line -> processRfq(Rfq.fromJson(line)));
+            rdd.collect().forEach(line -> {
+                processRfq(Rfq.fromJson(line));
+            });
         });
 
         // Start the streaming context
         streamingContext.start();
-        // streamingContext.awaitTermination();
+        streamingContext.awaitTermination();
     }
 
     public void processRfq(Rfq rfq) {
-        log.info(String.format("Received Rfq: %s", rfq.toString()));
+        log.info(String.format("Received Rfq: %s", rfq));
 
         // Create a blank map for the metadata to be collected
-        Map<RfqMetadataFieldNames, Object> metadata = new HashMap<>();
+        Map<RfqMetadataFieldNames, Object> metadata = new TreeMap<>();
 
         // Get metadata from each of the extractors
         // Loop through the extractor list and implement each extractor
+
+
         for (RfqMetadataExtractor extractor: extractors) {
             // Use the metadata extractor and add to the metadata map
             for(Map.Entry<RfqMetadataFieldNames, Object> entry: extractor.extractMetaData(rfq, session, trades).entrySet()) {

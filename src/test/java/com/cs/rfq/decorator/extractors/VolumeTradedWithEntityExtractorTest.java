@@ -22,29 +22,43 @@ public class VolumeTradedWithEntityExtractorTest extends AbstractSparkUnitTest {
     public void setup() {
         rfq = new Rfq();
         rfq.setEntityId(1561279226039690843L);
-
-        String filePath = getClass().getResource("volume-traded-1.json").getPath();
-        trades = new TradeDataLoader().loadTrades(session, filePath);
-
         extractor = new VolumeTradedWithEntityExtractor();
-        meta = extractor.extractMetaData(rfq, session, trades);
+
     }
 
     @Test
     public void checkVolumeForPastWeek() {
+        String filePath = getClass().getResource("volume-traded-1-testing.json").getPath();
+        trades = new TradeDataLoader().loadTrades(session, filePath);
+        meta = extractor.extractMetaData(rfq, session, trades);
         Object result = meta.get(RfqMetadataFieldNames.volumeTradedForSecurityPastWeek);
         assertEquals(1_350_000L, result);
     }
 
     @Test
     public void checkVolumeForPastMonth() {
+        String filePath = getClass().getResource("volume-traded-1-testing.json").getPath();
+        trades = new TradeDataLoader().loadTrades(session, filePath);
+        meta = extractor.extractMetaData(rfq, session, trades);
         Object result = meta.get(RfqMetadataFieldNames.volumeTradedForSecurityPastMonth);
         assertEquals(2_700_000L, result);
     }
 
     @Test
     public void checkVolumeForPastYear() {
+        String filePath = getClass().getResource("volume-traded-1-testing.json").getPath();
+        trades = new TradeDataLoader().loadTrades(session, filePath);
+        meta = extractor.extractMetaData(rfq, session, trades);
         Object result = meta.get(RfqMetadataFieldNames.volumeTradedForSecurityPastYear);
         assertEquals(4_050_000L, result);
+    }
+
+    @Test
+    public void checkVolumeIfNoTradesMatch() {
+        String filePath = getClass().getResource("empty.json").getPath();
+        trades = new TradeDataLoader().loadTrades(session, filePath);
+        meta = extractor.extractMetaData(rfq, session, trades);
+        Object result = meta.get(RfqMetadataFieldNames.volumeTradedForSecurityPastYear);
+        assertEquals(0L, result);
     }
 }
