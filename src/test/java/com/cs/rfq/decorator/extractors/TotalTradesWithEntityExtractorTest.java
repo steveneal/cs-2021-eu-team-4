@@ -18,6 +18,7 @@ public class TotalTradesWithEntityExtractorTest extends AbstractSparkUnitTest {
     private Map<RfqMetadataFieldNames, Object> meta;
     Dataset<Row> trades;
 
+
     @BeforeEach
     public void setup() {
         rfq = new Rfq();
@@ -25,6 +26,8 @@ public class TotalTradesWithEntityExtractorTest extends AbstractSparkUnitTest {
 
         String filePath = getClass().getResource("volume-traded-1.json").getPath();
         trades = new TradeDataLoader().loadTrades(session, filePath);
+        extractor = new VolumeTradedForSecurityExtractor();
+        meta = extractor.extractMetaData(rfq, session, trades);
     }
 
     @Test
