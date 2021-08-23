@@ -26,16 +26,54 @@ public class TradeSideBiasExtractorTest extends AbstractSparkUnitTest {
     }
 
     @Test
-    public void checkBiasWhenAllTradesMatch() {
+    public void checkBiasForMonthWhenAllTradesMatch() {
 
         TradeSideBiasExtractor extractor = new TradeSideBiasExtractor();
-        extractor.setMonthSince("2021-01-01");
-        //extractor.setWeekSince("2021-01-01");
+        extractor.setMonthSince("2018-06-09");
 
         Map<RfqMetadataFieldNames, Object> meta = extractor.extractMetaData(rfq, session, trades);
 
         Object result = meta.get(RfqMetadataFieldNames.tradeSideBias);
 
-        assertEquals(1_350_000L, result);
+        assertEquals(1L, result);
+    }
+
+    @Test
+    public void checkBiasForMonthWhenNoTradesMatch() {
+
+        TradeSideBiasExtractor extractor = new TradeSideBiasExtractor();
+        extractor.setMonthSince("2019-01-01");
+
+        Map<RfqMetadataFieldNames, Object> meta = extractor.extractMetaData(rfq, session, trades);
+
+        Object result = meta.get(RfqMetadataFieldNames.tradeSideBias);
+
+        assertEquals(-1L, result);
+    }
+
+    @Test
+    public void checkBiasForWeekWhenAllTradesMatch() {
+
+        TradeSideBiasExtractor extractor = new TradeSideBiasExtractor();
+        extractor.setWeekSince("2018-06-09");
+
+        Map<RfqMetadataFieldNames, Object> meta = extractor.extractMetaData(rfq, session, trades);
+
+        Object result = meta.get(RfqMetadataFieldNames.tradeSideBias);
+
+        assertEquals(1L, result);
+    }
+
+    @Test
+    public void checkBiasForWeekWhenNoTradesMatch() {
+
+        TradeSideBiasExtractor extractor = new TradeSideBiasExtractor();
+        extractor.setWeekSince("2019-06-09");
+
+        Map<RfqMetadataFieldNames, Object> meta = extractor.extractMetaData(rfq, session, trades);
+
+        Object result = meta.get(RfqMetadataFieldNames.tradeSideBias);
+
+        assertEquals(-1L, result);
     }
 }

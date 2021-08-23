@@ -22,30 +22,29 @@ public class TradeSideBiasExtractor implements RfqMetadataExtractor {
 
         long todayMs = DateTime.now().withMillisOfDay(0).getMillis();
         long pastWeekMs = DateTime.now().withMillis(todayMs).minusWeeks(1).getMillis();
-        long pastMonthMs = DateTime.now().withMillis(pastWeekMs).minusMonths(1).getMillis();
+        long pastMonthMs = DateTime.now().withMillis(todayMs).minusMonths(1).getMillis();
+
+        /*
         this.weekSince = Long.toString(pastWeekMs);
         this.monthSince = Long.toString(pastMonthMs);
+*/
+        this.weekSince = DateTime.now().getYear() + "-" + DateTime.now().getMonthOfYear()  + "-" +  DateTime.now().getDayOfMonth();
+        this.weekSince = DateTime.now().getYear() + "-" + DateTime.now().getMonthOfYear() + "-01";
     }
 
     public Map<RfqMetadataFieldNames, Object> extractMetaData(Rfq rfq, SparkSession session, Dataset<Row> trades) {
 
-        /*
-        String query = String.format("SELECT sum(LastQty) from trade where EntityId='%s' AND SecurityId='%s' AND TradeDate >= '%s'",
-                rfq.getEntityId(),
-                rfq.getIsin(),
-                since);
-         */
         // get the number on sell side for a week
         String weekSellQuery = String.format("SELECT sum(LastQty) from trade where EntityId='%s' AND SecurityID='%s' AND TradeDate >= '%s' AND Side = '%s'",
                 rfq.getEntityId(),
-               // rfq.getIsin(),
+                rfq.getIsin(),
                 weekSince,
                 sell);
 
         // get the number on buy side for a week
         String weekBuyQuery = String.format("SELECT sum(LastQty) from trade where EntityId='%s' AND SecurityID='%s' AND TradeDate >= '%s' AND Side = '%s'",
                 rfq.getEntityId(),
-               // rfq.getIsin(),
+                rfq.getIsin(),
                 weekSince,
                 buy);
 
@@ -87,19 +86,29 @@ public class TradeSideBiasExtractor implements RfqMetadataExtractor {
             ratio = -1L;
         }
 
+
+        System.out.println(weekSince);
+        System.out.println(monthSince);
         System.out.println(ratio);
         System.out.println(weekBuyAmount);
         System.out.println(weekSellAmount);
+        System.out.println(monthBuyAmount);
+        System.out.println(monthSellAmount);
 
         Map<RfqMetadataFieldNames, Object> results = new HashMap<>();
         results.put(RfqMetadataFieldNames.tradeSideBias, ratio);
         return results;
     };
 
+    //If week is set specified then month is null
     protected void setWeekSince(String since) {
         this.weekSince = since;
+        this.monthSince = null;
     }
+
+    //If month is set specified then week is null
     protected void setMonthSince(String since) {
         this.monthSince = since;
+        this.weekSince = null;
     }
 }

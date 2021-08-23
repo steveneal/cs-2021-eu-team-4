@@ -33,6 +33,7 @@ public class VolumeTradedWithEntityYTDExtractor implements RfqMetadataExtractor 
             volume = 0L;
         }
 
+        System.out.println(since);
         Map<RfqMetadataFieldNames, Object> results = new HashMap<>();
         results.put(RfqMetadataFieldNames.volumeTradedYearToDate, volume);
         return results;
